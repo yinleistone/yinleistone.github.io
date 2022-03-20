@@ -1,0 +1,473 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>数组、指针与字符串（一） | 唤石</title><meta name="keywords" content="C++"><meta name="author" content="唤石"><meta name="copyright" content="唤石"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数组、指针与字符串（一）数组的定义与初始化数组的定义与使用 数组是具有一定顺序关系的若干相同类型变量的集合体，组成数组的变量称为该数组的元素。  数组的定义 类型说明符  数组名[常量表达式] [常量表达式]……;  数组名的构成方法与一般变量名相同。  例如：int a[10]; 表示a为整型数组，有10个元素：a[0]…a[9]  例如: int a[5] [3]; 表示a为整型二维数组，其中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组、指针与字符串（一）">
+<meta property="og:url" content="http://yinleistone.github.io/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="唤石">
+<meta property="og:description" content="数组、指针与字符串（一）数组的定义与初始化数组的定义与使用 数组是具有一定顺序关系的若干相同类型变量的集合体，组成数组的变量称为该数组的元素。  数组的定义 类型说明符  数组名[常量表达式] [常量表达式]……;  数组名的构成方法与一般变量名相同。  例如：int a[10]; 表示a为整型数组，有10个元素：a[0]…a[9]  例如: int a[5] [3]; 表示a为整型二维数组，其中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png">
+<meta property="article:published_time" content="2022-03-19T12:00:42.000Z">
+<meta property="article:modified_time" content="2022-03-19T12:26:50.934Z">
+<meta property="article:author" content="唤石">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png"><link rel="shortcut icon" href="/img/30.png"><link rel="canonical" href="http://yinleistone.github.io/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%B8%80%EF%BC%89/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数组、指针与字符串（一）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-19 20:26:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/12.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">唤石</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数组、指针与字符串（一）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-19T12:00:42.000Z" title="发表于 2022-03-19 20:00:42">2022-03-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-19T12:26:50.934Z" title="更新于 2022-03-19 20:26:50">2022-03-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C/">C++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数组、指针与字符串（一）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="数组、指针与字符串（一）"><a href="#数组、指针与字符串（一）" class="headerlink" title="数组、指针与字符串（一）"></a>数组、指针与字符串（一）</h1><h2 id="数组的定义与初始化"><a href="#数组的定义与初始化" class="headerlink" title="数组的定义与初始化"></a>数组的定义与初始化</h2><h3 id="数组的定义与使用"><a href="#数组的定义与使用" class="headerlink" title="数组的定义与使用"></a>数组的定义与使用</h3><ul>
+<li>数组是具有一定顺序关系的若干相同类型变量的集合体，组成数组的变量称为该数组的元素。</li>
+</ul>
+<h4 id="数组的定义"><a href="#数组的定义" class="headerlink" title="数组的定义"></a>数组的定义</h4><ul>
+<li><p>类型说明符  数组名[常量表达式] [常量表达式]……;</p>
+</li>
+<li><p>数组名的构成方法与一般变量名相同。</p>
+</li>
+<li><p>例如：int a[10]; 表示a为整型数组，有10个元素：a[0]…a[9]</p>
+</li>
+<li><p>例如: int a[5] [3];</p>
+<p>表示a为整型二维数组，其中第一维有5个下标（0<del>4），第二维有3个下标（0</del>2），数组的元素个数为15，可以用于存放5行3列的整型数据表格。</p>
+</li>
+</ul>
+<h4 id="数组的使用"><a href="#数组的使用" class="headerlink" title="数组的使用"></a>数组的使用</h4><ul>
+<li><p>使用数组元素</p>
+<ul>
+<li>必须先声明，后使用。<br> 只能逐个引用数组元素，而不能一次引用整个数组</li>
+</ul>
+<p>例如：a[0]&#x3D;a[5]+a[7]-a[2*3]</p>
+<p>例如：b[1] [2]&#x3D;a[2] [3]&#x2F;2</p>
+</li>
+<li><p>例6-1</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="type">int</span> a[<span class="number">10</span>], b[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">a[i] = i * <span class="number">2</span> - <span class="number">1</span>;</span><br><span class="line">b[<span class="number">10</span> - i - <span class="number">1</span>] = a[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;a[&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;] = &quot;</span> &lt;&lt; a[i] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;b[&quot;</span> &lt;&lt; I &lt;&lt; <span class="string">&quot;] = &quot;</span> &lt;&lt; b[i] &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="数组的存储与初始化"><a href="#数组的存储与初始化" class="headerlink" title="数组的存储与初始化"></a>数组的存储与初始化</h3><h4 id="一维数组的存储"><a href="#一维数组的存储" class="headerlink" title="一维数组的存储"></a>一维数组的存储</h4><p>数组元素在内存中顺次存放，它们的地址是连续的。元素间物理地址上的相邻，对应着逻辑次序上的相邻。</p>
+<p>例如：</p>
+<h4 id="一维数组的初始化"><a href="#一维数组的初始化" class="headerlink" title="一维数组的初始化"></a>一维数组的初始化</h4><p>在定义数组时给出数组元素的初始值。</p>
+<ul>
+<li><p>列出全部元素的初始值</p>
+<p>例如：static int a[10]&#x3D;{0,1,2,3,4,5,6,7,8,9};</p>
+</li>
+<li><p>可以只给一部分元素赋初值</p>
+<p>例如：static int a[10]&#x3D;{0,1,2,3,4};</p>
+</li>
+<li><p>在对全部数组元素赋初值时，可以不指定数组长度</p>
+<p>例如：static int a[]&#x3D;{0,1,2,3,4,5,6,7,8,9}</p>
+</li>
+</ul>
+<h4 id="二维数组的存储"><a href="#二维数组的存储" class="headerlink" title="二维数组的存储"></a>二维数组的存储</h4><ul>
+<li><p>按行存放</p>
+<p>例如： float a[3] [4];</p>
+<p>可以理解为：</p>
+<p>其中数组a的存储顺序为：</p>
+</li>
+<li><p>注意：</p>
+<ul>
+<li>如果不作任何初始化，内部auto型数组中会存在垃圾数据，static数组中的数据默认初始化为0；</li>
+<li>如果只对部分元素初始化，剩下的未显式初始化的元素，将自动被初始化为零；</li>
+<li>现在我们来看一个用数组存放Fibonacci数列的例子。</li>
+</ul>
+</li>
+</ul>
+<h4 id="例-求Fibonacci数列的前20项"><a href="#例-求Fibonacci数列的前20项" class="headerlink" title="例: 求Fibonacci数列的前20项"></a>例: 求Fibonacci数列的前20项</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="type">int</span> f[<span class="number">20</span>] = &#123;<span class="number">1</span>,<span class="number">1</span>&#125;; <span class="comment">//初始化第0、1个数</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt; <span class="number">20</span>; i++) <span class="comment">//求第2～19个数</span></span><br><span class="line">f[i] = f[i - <span class="number">2</span>] + f[i - <span class="number">1</span>];</span><br><span class="line"><span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++) &#123; <span class="comment">//输出，每行5个数</span></span><br><span class="line"><span class="keyword">if</span> (i % <span class="number">5</span> == <span class="number">0</span>) cout &lt;&lt; endl;</span><br><span class="line">cout.<span class="built_in">width</span>(<span class="number">12</span>); <span class="comment">//设置输出宽度为12</span></span><br><span class="line">cout &lt;&lt; f[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p><img src="https://secure2.wostatic.cn/static/kYe644jKubJqYRimMXo6nK/image.png" alt="img"></p>
+<h3 id="一维数组应用举例"><a href="#一维数组应用举例" class="headerlink" title="一维数组应用举例"></a>一维数组应用举例</h3><ul>
+<li>循环从键盘读入若干组选择题答案，计算并输出每组答案的正确率，直到输入ctrl+z为止。</li>
+<li>每组连续输入5个答案，每个答案可以是’a’..’d’。</li>
+<li>例: 一维数组应用举例</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">const</span> <span class="type">char</span> key[ ] = &#123;<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;d&#x27;</span>&#125;;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> NUM_QUES = <span class="number">5</span>;</span><br><span class="line">  <span class="type">char</span> c;</span><br><span class="line">  <span class="type">int</span> ques = <span class="number">0</span>, numCorrect = <span class="number">0</span>;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;Enter the &quot;</span> &lt;&lt; NUM_QUES &lt;&lt; <span class="string">&quot; question tests:&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">while</span>(cin.<span class="built_in">get</span>(c)) &#123;</span><br><span class="line">  <span class="keyword">if</span>(c != <span class="string">&#x27;\n&#x27;</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span>(c == key[ques]) &#123;</span><br><span class="line">  numCorrect++; cout &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  cout&lt;&lt;<span class="string">&quot;*&quot;</span>;</span><br><span class="line">  ques++;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot; Score &quot;</span> &lt;&lt; <span class="built_in">static_cast</span>&lt;<span class="type">float</span>&gt;(numCorrect)/NUM_QUES*<span class="number">100</span> &lt;&lt; <span class="string">&quot;%&quot;</span>;</span><br><span class="line">  ques = <span class="number">0</span>;  numCorrect = <span class="number">0</span>; cout &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数组作为函数的参数"><a href="#数组作为函数的参数" class="headerlink" title="数组作为函数的参数"></a>数组作为函数的参数</h2><ul>
+<li><p>数组元素作实参，与单个变量一样。</p>
+</li>
+<li><p>数组名作参数，形、实参数都应是数组名（实质上是地址，关于地址详见6.2），类型要一样，传送的是数组首地址。对形参数组的改变会直接影响到实参数组。</p>
+</li>
+<li><p>例6-2 使用数组名作为函数参数</p>
+<p>主函数中初始化一个二维数组，表示一个矩阵，矩阵，并将每个元素都输出，然后调用子函数，分别计算每一行的元素之和，将和直接存放在每行的第一个元素中，返回主函数之后输出各行元素的和。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">rowSum</span><span class="params">(<span class="type">int</span> a[][<span class="number">4</span>], <span class="type">int</span> nRow)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nRow; i++) &#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt; <span class="number">4</span>; j++)</span><br><span class="line">  a[i][<span class="number">0</span>] += a[i][j];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;   <span class="comment">//主函数</span></span><br><span class="line">  <span class="comment">//定义并初始化数组</span></span><br><span class="line">  <span class="type">int</span> table[<span class="number">3</span>][<span class="number">4</span>] = &#123;&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;, &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;, &#123;<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">//输出数组元素</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)  &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++)</span><br><span class="line">  cout &lt;&lt; table[i][j] &lt;&lt; <span class="string">&quot;   &quot;</span>;</span><br><span class="line">  cout &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">rowSum</span>(table, <span class="number">3</span>);     <span class="comment">//调用子函数，计算各行和</span></span><br><span class="line">  <span class="comment">//输出计算结果</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;Sum of row &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; is &quot;</span> &lt;&lt; table[i][<span class="number">0</span>] &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="对象数组"><a href="#对象数组" class="headerlink" title="对象数组"></a>对象数组</h2><h3 id="对象数组的定义与访问"><a href="#对象数组的定义与访问" class="headerlink" title="对象数组的定义与访问"></a>对象数组的定义与访问</h3><ul>
+<li><p>定义对象数组</p>
+<p>类名 数组名[元素个数]；</p>
+</li>
+<li><p>访问对象数组元素</p>
+<p>通过下标访问</p>
+<p>数组名[下标].成员名</p>
+</li>
+</ul>
+<h3 id="对象数组初始化"><a href="#对象数组初始化" class="headerlink" title="对象数组初始化"></a>对象数组初始化</h3><ul>
+<li><p>数组中每一个元素对象被创建时，系统都会调用类构造函数初始化该对象。</p>
+</li>
+<li><p>通过初始化列表赋值。</p>
+<p>例：Point a[2]&#x3D;{Point(1,2),Point(3,4)};</p>
+</li>
+<li><p>如果没有为数组元素指定显式初始值，数组元素便使用默认值初始化（调用默认构造函数）。</p>
+</li>
+</ul>
+<h3 id="数组元素所属类的构造函数"><a href="#数组元素所属类的构造函数" class="headerlink" title="数组元素所属类的构造函数"></a>数组元素所属类的构造函数</h3><ul>
+<li>元素所属的类不声明构造函数，则采用默认构造函数。</li>
+<li>各元素对象的初值要求为相同的值时，可以声明具有默认形参值的构造函数。</li>
+<li>各元素对象的初值要求为不同的值时，需要声明带形参的构造函数。</li>
+<li>当数组中每一个对象被删除时，系统都要调用一次析构函数。</li>
+</ul>
+<h3 id="例6-3-对象数组应用举例"><a href="#例6-3-对象数组应用举例" class="headerlink" title="例6-3 对象数组应用举例"></a>例6-3 对象数组应用举例</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Point.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _POINT_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _POINT_H</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123; <span class="comment">//类的定义</span></span><br><span class="line"><span class="keyword">public</span>: <span class="comment">//外部接口</span></span><br><span class="line">  <span class="built_in">Point</span>();</span><br><span class="line"><span class="built_in">Point</span>(<span class="type">int</span> x, <span class="type">int</span> y);</span><br><span class="line">~<span class="built_in">Point</span>()</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">move</span><span class="params">(<span class="type">int</span> newX,<span class="type">int</span> newY)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getX</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> x; &#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getY</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> y; &#125;</span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">showCount</span><span class="params">()</span></span>; <span class="comment">//静态函数成员</span></span><br><span class="line"><span class="keyword">private</span>: <span class="comment">//私有数据成员</span></span><br><span class="line"><span class="type">int</span> x, y;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">//_POINT_H</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Point.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Point.h&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">Point::<span class="built_in">Point</span>() : <span class="built_in">x</span>(<span class="number">0</span>), <span class="built_in">y</span>(<span class="number">0</span>) &#123;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Default Constructor called.&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">Point::<span class="built_in">Point</span>(<span class="type">int</span> x, <span class="type">int</span> y) : <span class="built_in">x</span>(x), <span class="built_in">y</span>(y) &#123;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Constructor called.&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">Point::~<span class="built_in">Point</span>() &#123;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Destructor called.&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Point::move</span><span class="params">(<span class="type">int</span> newX,<span class="type">int</span> newY)</span> </span>&#123;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Moving the point to (&quot;</span> &lt;&lt; newX &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; newY &lt;&lt; <span class="string">&quot;)&quot;</span> &lt;&lt; endl;</span><br><span class="line">x = newX;</span><br><span class="line">y = newY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//6-3.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Point.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Entering main...&quot;</span> &lt;&lt; endl;</span><br><span class="line">Point a[<span class="number">2</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++)</span><br><span class="line">  a[i].<span class="built_in">move</span>(i + <span class="number">10</span>, i + <span class="number">20</span>);</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Exiting main...&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">int</span> array[<span class="number">3</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"><span class="type">int</span> *p;</span><br><span class="line"><span class="keyword">for</span>(p = array; p &lt; array + <span class="built_in">sizeof</span>(array) / <span class="built_in">sizeof</span>(<span class="type">int</span>); ++p)</span><br><span class="line">&#123;</span><br><span class="line">  *p += <span class="number">2</span>;</span><br><span class="line">  std::cout &lt;&lt; *p &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">int</span> array[<span class="number">3</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> &amp; e : array)</span><br><span class="line">&#123;</span><br><span class="line">  e += <span class="number">2</span>;</span><br><span class="line">  std::cout&lt;&lt;e&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="指针的定义和运算"><a href="#指针的定义和运算" class="headerlink" title="指针的定义和运算"></a>指针的定义和运算</h2><h3 id="指针的概念、定义和指针运算"><a href="#指针的概念、定义和指针运算" class="headerlink" title="指针的概念、定义和指针运算"></a>指针的概念、定义和指针运算</h3><h4 id="内存空间的访问方式"><a href="#内存空间的访问方式" class="headerlink" title="内存空间的访问方式"></a>内存空间的访问方式</h4><ul>
+<li>通过变量名访问</li>
+<li>通过地址访问</li>
+</ul>
+<h4 id="指针的概念"><a href="#指针的概念" class="headerlink" title="指针的概念"></a>指针的概念</h4><ul>
+<li>指针：内存地址，用于间接访问内存单元</li>
+<li>指针变量：用于存放地址的变量</li>
+<li>指针变量的定义</li>
+<li>例：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> i;</span><br><span class="line"><span class="type">static</span> <span class="type">int</span>* ptr = &amp;i;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>例：</p>
+<p>*ptr &#x3D; 3;</p>
+</li>
+</ul>
+<h4 id="与地址相关的运算——“-”和“-amp-”"><a href="#与地址相关的运算——“-”和“-amp-”" class="headerlink" title="与地址相关的运算——“*”和“&amp;”"></a>与地址相关的运算——“*”和“&amp;”</h4><ul>
+<li>指针运算符</li>
+<li>地址运算符：&amp;</li>
+</ul>
+<h3 id="指针的初始化和赋值"><a href="#指针的初始化和赋值" class="headerlink" title="指针的初始化和赋值"></a>指针的初始化和赋值</h3><h4 id="指针变量的初始化"><a href="#指针变量的初始化" class="headerlink" title="指针变量的初始化"></a>指针变量的初始化</h4><ul>
+<li><p>语法形式</p>
+<p>存储类型 数据类型 *指针名＝初始地址；</p>
+</li>
+<li><p>例：</p>
+<p>int *pa &#x3D; &amp;a;</p>
+</li>
+<li><p>注意事项</p>
+<ul>
+<li>用变量地址作为初值时，该变量必须在指针初始化之前已声明过，且变量类型应与指针类型一致。</li>
+<li>可以用一个已有合法值的指针去初始化另一个指针变量。</li>
+<li>不要用一个内部非静态变量去初始化 static 指针。</li>
+</ul>
+</li>
+</ul>
+<h4 id="指针变量的赋值运算"><a href="#指针变量的赋值运算" class="headerlink" title="指针变量的赋值运算"></a>指针变量的赋值运算</h4><ul>
+<li><p>语法形式</p>
+<p>指针名&#x3D;地址</p>
+<p>注意：“地址”中存放的数据类型与指针类型必须相符</p>
+</li>
+<li><p>向指针变量赋的值必须是地址常量或变量，不能是普通整数，例如：</p>
+<ul>
+<li>通过地址运算“&amp;”求得已定义的变量和对象的起始地址</li>
+<li>动态内存分配成功时返回的地址</li>
+</ul>
+</li>
+<li><p>例外：整数0可以赋给指针，表示空指针。</p>
+</li>
+<li><p>允许定义或声明指向 void 类型的指针。该指针可以被赋予任何类型对象的地址。</p>
+<p>例： void *general;</p>
+</li>
+</ul>
+<h4 id="指针空值nullptr"><a href="#指针空值nullptr" class="headerlink" title="指针空值nullptr"></a>指针空值nullptr</h4><ul>
+<li>以往用0或者NULL去表达空指针的问题：<ul>
+<li>C&#x2F;C++的NULL宏是个被有很多潜在BUG的宏。因为有的库把其定义成整数0，有的定义成 (void*)0。在C的时代还好。但是在C++的时代，这就会引发很多问题。</li>
+</ul>
+</li>
+<li>C++11使用nullptr关键字，是表达更准确，类型安全的空指针</li>
+</ul>
+<h4 id="例6-5-指针的定义、赋值与使用"><a href="#例6-5-指针的定义、赋值与使用" class="headerlink" title="例6-5 指针的定义、赋值与使用"></a>例6-5 指针的定义、赋值与使用</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//6_5.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="type">int</span> i; <span class="comment">//定义int型数i</span></span><br><span class="line"><span class="type">int</span> *ptr = &amp;i; <span class="comment">//取i的地址赋给ptr</span></span><br><span class="line">i = <span class="number">10</span>; <span class="comment">//int型数赋初值</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i = &quot;</span> &lt;&lt; i &lt;&lt; endl; <span class="comment">//输出int型数的值</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;*ptr = &quot;</span> &lt;&lt; *ptr &lt;&lt; endl; <span class="comment">//输出int型指针所指地址的内容</span></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">运行结果：</span><br><span class="line">i = <span class="number">10</span></span><br><span class="line">*ptr = <span class="number">10</span></span><br><span class="line">例<span class="number">6</span><span class="number">-6</span> <span class="type">void</span>类型指针的使用</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">//!void voidObject; 错，不能声明void类型的变量</span></span><br><span class="line"><span class="type">void</span> *pv; <span class="comment">//对，可以声明void类型的指针</span></span><br><span class="line"><span class="type">int</span> i = <span class="number">5</span>;</span><br><span class="line">pv = &amp;i; <span class="comment">//void类型指针指向整型变量</span></span><br><span class="line"><span class="type">int</span> *pint = <span class="built_in">static_cast</span>&lt;<span class="type">int</span> *&gt;(pv); <span class="comment">//void指针转换为int指针</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;*pint = &quot;</span> &lt;&lt; *pint &lt;&lt; endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="指向常量的指针"><a href="#指向常量的指针" class="headerlink" title="指向常量的指针"></a>指向常量的指针</h4><ul>
+<li>不能通过指向常量的指针改变所指对象的值，但指针本身可以改变，可以指向另外的对象。</li>
+<li>例</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> *p1 = &amp;a; <span class="comment">//p1是指向常量的指针</span></span><br><span class="line"><span class="type">int</span> b;</span><br><span class="line">p1 = &amp;b; <span class="comment">//正确，p1本身的值可以改变</span></span><br><span class="line">  *p1 = <span class="number">1</span>; <span class="comment">//编译时出错，不能通过p1改变所指的对象</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="指针类型的常量"><a href="#指针类型的常量" class="headerlink" title="指针类型的常量"></a>指针类型的常量</h4><ul>
+<li>若声明指针常量，则指针本身的值不能被改变。</li>
+<li>例</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a;</span><br><span class="line"><span class="type">int</span> * <span class="type">const</span> p2 = &amp;a;</span><br><span class="line">p2 = &amp;b; <span class="comment">//错误，p2是指针常量，值不能改变</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="指针的算术运算、关系运算"><a href="#指针的算术运算、关系运算" class="headerlink" title="指针的算术运算、关系运算"></a>指针的算术运算、关系运算</h3><h4 id="指针类型的算术运算"><a href="#指针类型的算术运算" class="headerlink" title="指针类型的算术运算"></a>指针类型的算术运算</h4><ul>
+<li>指针与整数的加减运算</li>
+<li>指针++，–运算</li>
+</ul>
+<h4 id="指针类型的算术运算-1"><a href="#指针类型的算术运算-1" class="headerlink" title="指针类型的算术运算"></a>指针类型的算术运算</h4><ul>
+<li>指针p加上或减去n<ul>
+<li>其意义是指针当前指向位置的前方或后方第n个数据的起始位置。</li>
+</ul>
+</li>
+<li>指针的++、–运算<ul>
+<li>意义是指向下一个或前一个完整数据的起始。</li>
+</ul>
+</li>
+<li>运算的结果值取决于指针指向的数据类型，总是指向一个完整数据的起始位置。</li>
+<li>当指针指向连续存储的同类型数据时，指针与整数的加减运和自增自减算才有意义。</li>
+</ul>
+<h4 id="指针与整数相加的意义"><a href="#指针与整数相加的意义" class="headerlink" title="指针与整数相加的意义"></a>指针与整数相加的意义</h4><h4 id="指针类型的关系运算"><a href="#指针类型的关系运算" class="headerlink" title="指针类型的关系运算"></a>指针类型的关系运算</h4><ul>
+<li><p>指向相同类型数据的指针之间可以进行各种关系运算。</p>
+</li>
+<li><p>指向不同数据类型的指针，以及指针与一般整数变量之间的关系运算是无意义的。</p>
+</li>
+<li><p>指针可以和零之间进行等于或不等于的关系运算。</p>
+<p>例如：p&#x3D;&#x3D;0或p!&#x3D;0</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">唤石</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yinleistone.github.io/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%B8%80%EF%BC%89/">http://yinleistone.github.io/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%B8%80%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yinleistone.github.io" target="_blank">唤石</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%BA%8C%EF%BC%89/"><img class="prev-cover" src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">数组、指针与字符串（二）</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/19/%E6%95%B0%E6%8D%AE%E7%9A%84%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/"><img class="next-cover" src="https://s2.loli.net/2022/03/04/wLuF28AyI9hnSxZ.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">数据的共享与保护</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/18/C++%E7%AE%80%E5%8D%95%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89/" title="C++简单程序设计（一）"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">C++简单程序设计（一）</div></div></a></div><div><a href="/2022/03/19/%E5%87%BD%E6%95%B0/" title="函数"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">函数</div></div></a></div><div><a href="/2022/03/19/%E6%95%B0%E6%8D%AE%E7%9A%84%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/" title="数据的共享与保护"><img class="cover" src="https://s2.loli.net/2022/03/04/wLuF28AyI9hnSxZ.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">数据的共享与保护</div></div></a></div><div><a href="/2022/03/19/C++%E7%AE%80%E5%8D%95%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="C++简单程序设计（二）"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">C++简单程序设计（二）</div></div></a></div><div><a href="/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数组、指针与字符串（二）"><img class="cover" src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">数组、指针与字符串（二）</div></div></a></div><div><a href="/2022/03/19/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" title="类与对象"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">类与对象</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/12.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">唤石</div><div class="author-info__description">What I cannot create, I do not understand.</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yinleistone"><i class="fa-solid fa-heart-pulse"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yinleistone" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1025028957@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/391746931?spm_id_from=333.1007.0.0" target="_blank" title=""><i class="fa-brands fa-bilibili"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">爱科技，更爱心雨！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">数组、指针与字符串（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.</span> <span class="toc-text">数组的定义与初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.1.</span> <span class="toc-text">数组的定义与使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">数组的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">数组的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.2.</span> <span class="toc-text">数组的存储与初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">一维数组的存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">一维数组的初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">二维数组的存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-%E6%B1%82Fibonacci%E6%95%B0%E5%88%97%E7%9A%84%E5%89%8D20%E9%A1%B9"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">例: 求Fibonacci数列的前20项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">一维数组应用举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">数组作为函数的参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">对象数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E8%AE%BF%E9%97%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">对象数组的定义与访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.3.2.</span> <span class="toc-text">对象数组初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E6%89%80%E5%B1%9E%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.3.</span> <span class="toc-text">数组元素所属类的构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B6-3-%E5%AF%B9%E8%B1%A1%E6%95%B0%E7%BB%84%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="toc-number">1.3.4.</span> <span class="toc-text">例6-3 对象数组应用举例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%8C%83%E5%9B%B4%E7%9A%84for%E5%BE%AA%E7%8E%AF"><span class="toc-number">1.4.</span> <span class="toc-text">基于范围的for循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%BF%90%E7%AE%97"><span class="toc-number">1.5.</span> <span class="toc-text">指针的定义和运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E6%A6%82%E5%BF%B5%E3%80%81%E5%AE%9A%E4%B9%89%E5%92%8C%E6%8C%87%E9%92%88%E8%BF%90%E7%AE%97"><span class="toc-number">1.5.1.</span> <span class="toc-text">指针的概念、定义和指针运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E7%9A%84%E8%AE%BF%E9%97%AE%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">内存空间的访问方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">指针的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E%E5%9C%B0%E5%9D%80%E7%9B%B8%E5%85%B3%E7%9A%84%E8%BF%90%E7%AE%97%E2%80%94%E2%80%94%E2%80%9C-%E2%80%9D%E5%92%8C%E2%80%9C-amp-%E2%80%9D"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">与地址相关的运算——“*”和“&amp;”</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E8%B5%8B%E5%80%BC"><span class="toc-number">1.5.2.</span> <span class="toc-text">指针的初始化和赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">指针变量的初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E5%8F%98%E9%87%8F%E7%9A%84%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">指针变量的赋值运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%A9%BA%E5%80%BCnullptr"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">指针空值nullptr</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B6-5-%E6%8C%87%E9%92%88%E7%9A%84%E5%AE%9A%E4%B9%89%E3%80%81%E8%B5%8B%E5%80%BC%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.2.4.</span> <span class="toc-text">例6-5 指针的定义、赋值与使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E5%90%91%E5%B8%B8%E9%87%8F%E7%9A%84%E6%8C%87%E9%92%88"><span class="toc-number">1.5.2.5.</span> <span class="toc-text">指向常量的指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%B8%B8%E9%87%8F"><span class="toc-number">1.5.2.6.</span> <span class="toc-text">指针类型的常量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E3%80%81%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97"><span class="toc-number">1.5.3.</span> <span class="toc-text">指针的算术运算、关系运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">指针类型的算术运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97-1"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">指针类型的算术运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E4%B8%8E%E6%95%B4%E6%95%B0%E7%9B%B8%E5%8A%A0%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">指针与整数相加的意义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">指针类型的关系运算</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数组、指针与字符串（二）"><img src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数组、指针与字符串（二）"/></a><div class="content"><a class="title" href="/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数组、指针与字符串（二）">数组、指针与字符串（二）</a><time datetime="2022-03-19T12:03:29.000Z" title="发表于 2022-03-19 20:03:29">2022-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%B8%80%EF%BC%89/" title="数组、指针与字符串（一）"><img src="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数组、指针与字符串（一）"/></a><div class="content"><a class="title" href="/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%B8%80%EF%BC%89/" title="数组、指针与字符串（一）">数组、指针与字符串（一）</a><time datetime="2022-03-19T12:00:42.000Z" title="发表于 2022-03-19 20:00:42">2022-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/19/%E6%95%B0%E6%8D%AE%E7%9A%84%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/" title="数据的共享与保护"><img src="https://s2.loli.net/2022/03/04/wLuF28AyI9hnSxZ.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据的共享与保护"/></a><div class="content"><a class="title" href="/2022/03/19/%E6%95%B0%E6%8D%AE%E7%9A%84%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/" title="数据的共享与保护">数据的共享与保护</a><time datetime="2022-03-19T11:59:40.000Z" title="发表于 2022-03-19 19:59:40">2022-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/19/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" title="类与对象"><img src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="类与对象"/></a><div class="content"><a class="title" href="/2022/03/19/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" title="类与对象">类与对象</a><time datetime="2022-03-19T11:57:27.000Z" title="发表于 2022-03-19 19:57:27">2022-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/19/%E5%87%BD%E6%95%B0/" title="函数"><img src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="函数"/></a><div class="content"><a class="title" href="/2022/03/19/%E5%87%BD%E6%95%B0/" title="函数">函数</a><time datetime="2022-03-19T11:55:33.000Z" title="发表于 2022-03-19 19:55:33">2022-03-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 唤石</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
