@@ -1,0 +1,489 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>流类库与输入/输出 | 唤石</title><meta name="keywords" content="C++"><meta name="author" content="唤石"><meta name="copyright" content="唤石"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="流类库与输入&#x2F;输出I&#x2F;O流的概念及流类库结构程序与外界环境的信息交换 当程序与外界环境进行信息交换时，存在着两个对象：程序中的对象、文件对象。 流 一种抽象，负责在数据的生产者和数据的消费者之间建立联系，并管理数据的流动。  流对象与文件操作 程序建立一个流对象 指定这个流对象与某个文件对象建立连接 程序操作流对象 流对象通过文件系统对所连接的文件对象产生作用。  提取与插入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流类库与输入&#x2F;输出">
+<meta property="og:url" content="http://yinleistone.github.io/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/index.html">
+<meta property="og:site_name" content="唤石">
+<meta property="og:description" content="流类库与输入&#x2F;输出I&#x2F;O流的概念及流类库结构程序与外界环境的信息交换 当程序与外界环境进行信息交换时，存在着两个对象：程序中的对象、文件对象。 流 一种抽象，负责在数据的生产者和数据的消费者之间建立联系，并管理数据的流动。  流对象与文件操作 程序建立一个流对象 指定这个流对象与某个文件对象建立连接 程序操作流对象 流对象通过文件系统对所连接的文件对象产生作用。  提取与插入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png">
+<meta property="article:published_time" content="2022-03-31T06:38:42.000Z">
+<meta property="article:modified_time" content="2022-03-31T08:55:07.121Z">
+<meta property="article:author" content="唤石">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png"><link rel="shortcut icon" href="/img/30.png"><link rel="canonical" href="http://yinleistone.github.io/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '流类库与输入/输出',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-31 16:55:07'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/12.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">唤石</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">流类库与输入/输出</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-31T06:38:42.000Z" title="发表于 2022-03-31 14:38:42">2022-03-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-31T08:55:07.121Z" title="更新于 2022-03-31 16:55:07">2022-03-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C/">C++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="流类库与输入/输出"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="流类库与输入-x2F-输出"><a href="#流类库与输入-x2F-输出" class="headerlink" title="流类库与输入&#x2F;输出"></a>流类库与输入&#x2F;输出</h1><h2 id="I-x2F-O流的概念及流类库结构"><a href="#I-x2F-O流的概念及流类库结构" class="headerlink" title="I&#x2F;O流的概念及流类库结构"></a>I&#x2F;O流的概念及流类库结构</h2><h3 id="程序与外界环境的信息交换"><a href="#程序与外界环境的信息交换" class="headerlink" title="程序与外界环境的信息交换"></a>程序与外界环境的信息交换</h3><ul>
+<li>当程序与外界环境进行信息交换时，存在着两个对象：程序中的对象、文件对象。 流</li>
+<li>一种抽象，负责在数据的生产者和数据的消费者之间建立联系，并管理数据的流动。</li>
+</ul>
+<h3 id="流对象与文件操作"><a href="#流对象与文件操作" class="headerlink" title="流对象与文件操作"></a>流对象与文件操作</h3><ul>
+<li>程序建立一个流对象</li>
+<li>指定这个流对象与某个文件对象建立连接</li>
+<li>程序操作流对象</li>
+<li>流对象通过文件系统对所连接的文件对象产生作用。</li>
+</ul>
+<h3 id="提取与插入"><a href="#提取与插入" class="headerlink" title="提取与插入"></a>提取与插入</h3><ul>
+<li>读操作在流数据抽象中被称为（从流中）提取</li>
+<li>写操作被称为（向流中）插入。</li>
+</ul>
+<h3 id="流类库结构"><a href="#流类库结构" class="headerlink" title="流类库结构"></a>流类库结构</h3><p><img src="https://qn-next.xuetangx.com/15659274391778.png"></p>
+<h3 id="流类列表"><a href="#流类列表" class="headerlink" title="流类列表"></a>流类列表</h3><p><img src="https://qn-next.xuetangx.com/15659274423015.png"></p>
+<h2 id="输出流"><a href="#输出流" class="headerlink" title="输出流"></a>输出流</h2><h3 id="输出流概述"><a href="#输出流概述" class="headerlink" title="输出流概述"></a>输出流概述</h3><h4 id="最重要的三个输出流"><a href="#最重要的三个输出流" class="headerlink" title="最重要的三个输出流"></a>最重要的三个输出流</h4><ul>
+<li>ostream</li>
+<li>ofstream</li>
+<li>ostringstream</li>
+</ul>
+<h4 id="预先定义的输出流对象"><a href="#预先定义的输出流对象" class="headerlink" title="预先定义的输出流对象"></a>预先定义的输出流对象</h4><ul>
+<li>cout 标准输出</li>
+<li>cerr 标准错误输出，没有缓冲，发送给它的内容立即被输出。</li>
+<li>clog 类似于cerr，但是有缓冲，缓冲区满时被输出。</li>
+</ul>
+<h4 id="标准输出换向"><a href="#标准输出换向" class="headerlink" title="标准输出换向"></a>标准输出换向</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ofstream <span class="title">fout</span><span class="params">(<span class="string">&quot;b.out&quot;</span>)</span></span>;</span><br><span class="line">streambuf*  pOld  =cout.<span class="built_in">rdbuf</span>(fout.<span class="built_in">rdbuf</span>());  </span><br><span class="line"><span class="comment">//…</span></span><br><span class="line">cout.<span class="built_in">rdbuf</span>(pOld);</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="构造输出流对象"><a href="#构造输出流对象" class="headerlink" title="构造输出流对象"></a>构造输出流对象</h4><ul>
+<li>ofstream类支持磁盘文件输出</li>
+<li>如果在构造函数中指定一个文件名，当构造这个文件时该文件是自动打开的</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ofstream <span class="title">myFile</span><span class="params">(<span class="string">&quot;filename&quot;</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>可以在调用默认构造函数之后使用open成员函数打开文件</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ofstream myFile; <span class="comment">//声明一个静态文件输出流对象</span></span><br><span class="line">myFile.<span class="built_in">open</span>(<span class="string">&quot;filename&quot;</span>);   <span class="comment">//打开文件，使流对象与文件建立联系</span></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>在构造对象或用open打开文件时可以指定模式</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ofstream <span class="title">myFile</span><span class="params">(<span class="string">&quot;filename&quot;</span>, ios_base::out | ios_base::binary)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="文件输出流成员函数的三种类型"><a href="#文件输出流成员函数的三种类型" class="headerlink" title="文件输出流成员函数的三种类型"></a>文件输出流成员函数的三种类型</h4><ul>
+<li>与操纵符等价的成员函数。</li>
+<li>执行非格式化写操作的成员函数。</li>
+<li>其它修改流状态且不同于操纵符或插入运算符的成员函数。</li>
+</ul>
+<h4 id="文件输出流成员函数"><a href="#文件输出流成员函数" class="headerlink" title="文件输出流成员函数"></a>文件输出流成员函数</h4><ul>
+<li>open函数<br>  把流与一个特定的磁盘文件关联起来。<br>  需要指定打开模式。</li>
+<li>put函数<br>  把一个字符写到输出流中。</li>
+<li>write函数<br>  把内存中的一块内容写到一个文件输出流中</li>
+<li>seekp和tellp函数<br>  操作文件流的内部指针</li>
+<li>close函数<br>  关闭与一个文件输出流关联的磁盘文件</li>
+<li>错误处理函数<br>  在写到一个流时进行错误处理</li>
+</ul>
+<h3 id="向文本文件输出"><a href="#向文本文件输出" class="headerlink" title="向文本文件输出"></a>向文本文件输出</h3><p>标准输出设备显示器被系统看作文本文件，所以我们以向标准设备输出为例，介绍文本文件输出格式控制</p>
+<h4 id="插入运算符"><a href="#插入运算符" class="headerlink" title="插入运算符"></a>插入运算符</h4><ul>
+<li>插入(&lt;&lt;)运算符<ul>
+<li>为所有<strong>标准</strong>C++数据类型预先设计的，用于传送字节到一个输出流对象。</li>
+</ul>
+</li>
+</ul>
+<h4 id="操纵符（manipulator）"><a href="#操纵符（manipulator）" class="headerlink" title="操纵符（manipulator）"></a>操纵符（manipulator）</h4><ul>
+<li>插入运算符与操纵符一起工作<ul>
+<li>控制输出格式。</li>
+</ul>
+</li>
+<li>很多操纵符都定义在<ul>
+<li>ios_base类中（如hex()）、<br>  头文件（如setprecision()）。</li>
+</ul>
+</li>
+<li>控制输出宽度<ul>
+<li>在流中放入setw操纵符或调用width成员函数为每个项指定输出宽度。</li>
+</ul>
+</li>
+<li>setw和width仅影响紧随其后的输出项，但其它流格式操纵符保持有效直到发生改变。</li>
+<li>dec、oct和hex操纵符设置输入和输出的默认进制。</li>
+</ul>
+<h4 id="例11-1-使用width控制输出宽度"><a href="#例11-1-使用width控制输出宽度" class="headerlink" title="例11-1 使用width控制输出宽度"></a>例11-1 使用width控制输出宽度</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> values[] = &#123; <span class="number">1.23</span>, <span class="number">35.36</span>, <span class="number">653.7</span>, <span class="number">4358.24</span> &#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        cout.<span class="built_in">width</span>(<span class="number">10</span>);</span><br><span class="line">        cout &lt;&lt; values[i] &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">输出结果:</span><br><span class="line">      <span class="number">1.23</span></span><br><span class="line">     <span class="number">35.36</span></span><br><span class="line">     <span class="number">653.7</span></span><br><span class="line">   <span class="number">4358.24</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例11-2使用setw操纵符指定宽度"><a href="#例11-2使用setw操纵符指定宽度" class="headerlink" title="例11-2使用setw操纵符指定宽度"></a>例11-2使用setw操纵符指定宽度</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_2.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> values[] = &#123; <span class="number">1.23</span>, <span class="number">35.36</span>, <span class="number">653.7</span>, <span class="number">4358.24</span> &#125;;</span><br><span class="line">    string names[] = &#123; <span class="string">&quot;Zoot&quot;</span>, <span class="string">&quot;Jimmy&quot;</span>, <span class="string">&quot;Al&quot;</span>, <span class="string">&quot;Stan&quot;</span> &#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">      cout &lt;&lt; <span class="built_in">setw</span>(<span class="number">6</span>) &lt;&lt; names[i] </span><br><span class="line">     &lt;&lt; <span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; values[i] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">输出结果:</span><br><span class="line">  Zoot      <span class="number">1.23</span></span><br><span class="line"> Jimmy     <span class="number">35.36</span></span><br><span class="line">    Al     <span class="number">653.7</span></span><br><span class="line">  Stan   <span class="number">4358.24</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例11-3设置对齐方式"><a href="#例11-3设置对齐方式" class="headerlink" title="例11-3设置对齐方式"></a>例11-3设置对齐方式</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_3.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> values[] = &#123; <span class="number">1.23</span>, <span class="number">35.36</span>, <span class="number">653.7</span>, <span class="number">4358.24</span> &#125;;</span><br><span class="line">    string names[] = &#123; <span class="string">&quot;Zoot&quot;</span>, <span class="string">&quot;Jimmy&quot;</span>, <span class="string">&quot;Al&quot;</span>, <span class="string">&quot;Stan&quot;</span> &#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)</span><br><span class="line">      cout &lt;&lt; <span class="built_in">setiosflags</span>(ios_base::left)<span class="comment">//左对齐</span></span><br><span class="line">           &lt;&lt; <span class="built_in">setw</span>(<span class="number">6</span>) &lt;&lt; names[i]</span><br><span class="line">           &lt;&lt; <span class="built_in">resetiosflags</span>(ios_base::left)</span><br><span class="line">           &lt;&lt; <span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; values[i] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">输出结果:</span><br><span class="line">Zoot        <span class="number">1.23</span></span><br><span class="line">Jimmy      <span class="number">35.36</span></span><br><span class="line">Al         <span class="number">653.7</span></span><br><span class="line">Stan     <span class="number">4358.24</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="setiosflags操纵符"><a href="#setiosflags操纵符" class="headerlink" title="setiosflags操纵符"></a>setiosflags操纵符</h4><ul>
+<li>这个程序中，通过使用带参数的setiosflags操纵符来设置左对齐，setiosflags定义在头文件iomanip中。</li>
+<li>参数ios_base::left是ios_base的静态常量，因此引用时必须包括ios_base::前缀。</li>
+<li>这里需要用resetiosflags操纵符关闭左对齐标志。setiosflags不同于width和setw，它的影响是持久的，直到用resetiosflags重新恢复默认值时为止 。</li>
+<li>setiosflags的参数是该流的格式标志值，可用按位或（|）运算符进行组合</li>
+</ul>
+<h4 id="setiosflags的参数（流的格式标识）"><a href="#setiosflags的参数（流的格式标识）" class="headerlink" title="setiosflags的参数（流的格式标识）"></a>setiosflags的参数（流的格式标识）</h4><ul>
+<li>ios_base::skipws 在输入中跳过空白 。</li>
+<li>ios_base::left 左对齐值，用填充字符填充右边。</li>
+<li>ios_base::right 右对齐值，用填充字符填充左边（默认对齐方式）。</li>
+<li>ios_base::internal 在规定的宽度内，指定前缀符号之后，数值之前，插入指定的填充字符。</li>
+<li>ios_base::dec 以十进制形式格式化数值（默认进制）。</li>
+<li>ios_base::oct 以八进制形式格式化数值 。</li>
+<li>ios_base::hex 以十六进制形式格式化数值。</li>
+<li>ios_base::showbase 插入前缀符号以表明整数的数制。</li>
+<li>ios_base::showpoint 对浮点数值显示小数点和尾部的0 。</li>
+<li>ios_base::uppercase 对于十六进制数值显示大写字母A到F，对于科学格式显示大写字母E 。</li>
+<li>ios_base::showpos 对于非负数显示正号（“+”）。</li>
+<li>ios_base::scientific 以科学格式显示浮点数值。</li>
+<li>ios_base::fixed 以定点格式显示浮点数值（没有指数部分） 。</li>
+<li>ios_base::unitbuf 在每次插入之后转储并清除缓冲区内容。</li>
+</ul>
+<h4 id="精度"><a href="#精度" class="headerlink" title="精度"></a>精度</h4><ul>
+<li>浮点数输出精度的默认值是6，例如：3466.98。</li>
+<li>要改变精度：setprecision操纵符（定义在头文件iomanip中）。</li>
+<li>如果不指定fixed或scientific，精度值表示有效数字位数。</li>
+<li>如果设置了ios_base::fixed或ios_base::scientific精度值表示小数点之后的位数。</li>
+</ul>
+<h4 id="例11-4控制输出精度——未指定fixed或scientific"><a href="#例11-4控制输出精度——未指定fixed或scientific" class="headerlink" title="例11-4控制输出精度——未指定fixed或scientific"></a>例11-4控制输出精度——未指定fixed或scientific</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_4_1.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> values[] = &#123; <span class="number">1.23</span>, <span class="number">35.36</span>, <span class="number">653.7</span>, <span class="number">4358.24</span> &#125;;</span><br><span class="line">    string names[] = &#123; <span class="string">&quot;Zoot&quot;</span>, <span class="string">&quot;Jimmy&quot;</span>, <span class="string">&quot;Al&quot;</span>, <span class="string">&quot;Stan&quot;</span> &#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)</span><br><span class="line">      cout &lt;&lt; <span class="built_in">setiosflags</span>(ios_base::left)</span><br><span class="line">        &lt;&lt; <span class="built_in">setw</span>(<span class="number">6</span>) &lt;&lt; names[i]</span><br><span class="line">        &lt;&lt; <span class="built_in">resetiosflags</span>(ios_base::left)<span class="comment">//清除左对齐设置</span></span><br><span class="line">        &lt;&lt; <span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; <span class="built_in">setprecision</span>(<span class="number">1</span>) &lt;&lt; values[i] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line">Zoot           <span class="number">1</span></span><br><span class="line">Jimmy     <span class="number">4e+001</span></span><br><span class="line">Al        <span class="number">7e+002</span></span><br><span class="line">Stan      <span class="number">4e+003</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例11-4控制输出精度——指定fixed"><a href="#例11-4控制输出精度——指定fixed" class="headerlink" title="例11-4控制输出精度——指定fixed"></a>例11-4控制输出精度——指定fixed</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_4_2.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> values[] = &#123; <span class="number">1.23</span>, <span class="number">35.36</span>, <span class="number">653.7</span>, <span class="number">4358.24</span> &#125;;</span><br><span class="line">    string names[] = &#123; <span class="string">&quot;Zoot&quot;</span>, <span class="string">&quot;Jimmy&quot;</span>, <span class="string">&quot;Al&quot;</span>, <span class="string">&quot;Stan&quot;</span> &#125;;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">setiosflags</span>(ios_base::fixed);   </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)</span><br><span class="line">      cout &lt;&lt; <span class="built_in">setiosflags</span>(ios_base::left)</span><br><span class="line">        &lt;&lt; <span class="built_in">setw</span>(<span class="number">6</span>) &lt;&lt; names[i]</span><br><span class="line">        &lt;&lt; <span class="built_in">resetiosflags</span>(ios_base::left)<span class="comment">//清除左对齐设置</span></span><br><span class="line">        &lt;&lt; <span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; <span class="built_in">setprecision</span>(<span class="number">1</span>) &lt;&lt; values[i] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line">Zoot         <span class="number">1.2</span></span><br><span class="line">Jimmy       <span class="number">35.4</span></span><br><span class="line">Al         <span class="number">653.7</span></span><br><span class="line">Stan      <span class="number">4358.2</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例11-4控制输出精度——指定scientific"><a href="#例11-4控制输出精度——指定scientific" class="headerlink" title="例11-4控制输出精度——指定scientific"></a>例11-4控制输出精度——指定scientific</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_4_3.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> values[] = &#123; <span class="number">1.23</span>, <span class="number">35.36</span>, <span class="number">653.7</span>, <span class="number">4358.24</span> &#125;;</span><br><span class="line">    string names[] = &#123; <span class="string">&quot;Zoot&quot;</span>, <span class="string">&quot;Jimmy&quot;</span>, <span class="string">&quot;Al&quot;</span>, <span class="string">&quot;Stan&quot;</span> &#125;;</span><br><span class="line">  cout &lt;&lt; <span class="built_in">setiosflags</span>(ios_base::scientific);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)</span><br><span class="line">      cout &lt;&lt; <span class="built_in">setiosflags</span>(ios_base::left)</span><br><span class="line">        &lt;&lt; <span class="built_in">setw</span>(<span class="number">6</span>) &lt;&lt; names[i]</span><br><span class="line">        &lt;&lt; <span class="built_in">resetiosflags</span>(ios_base::left)<span class="comment">//清除左对齐设置</span></span><br><span class="line">        &lt;&lt; <span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; <span class="built_in">setprecision</span>(<span class="number">1</span>) &lt;&lt; values[i] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line">Zoot    <span class="number">1.2e+000</span></span><br><span class="line">Jimmy   <span class="number">3.5e+001</span></span><br><span class="line">Al      <span class="number">6.5e+002</span></span><br><span class="line">Stan    <span class="number">4.4e+003</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="向二进制文件输出"><a href="#向二进制文件输出" class="headerlink" title="向二进制文件输出"></a>向二进制文件输出</h3><h4 id="二进制文件流"><a href="#二进制文件流" class="headerlink" title="二进制文件流"></a>二进制文件流</h4><ul>
+<li>使用ofstream构造函数中的模式参量指定二进制输出模式；</li>
+<li>以通常方式构造一个流，然后使用setmode成员函数，在文件打开后改变模式；</li>
+<li>通过二进制文件输出流对象完成输出。</li>
+</ul>
+<h4 id="例11-5-向二进制文件输出"><a href="#例11-5-向二进制文件输出" class="headerlink" title="例11-5 向二进制文件输出"></a>例11-5 向二进制文件输出</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_5.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Date</span> &#123; </span><br><span class="line">    <span class="type">int</span> mon, day, year;  </span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Date dt = &#123; <span class="number">6</span>, <span class="number">10</span>, <span class="number">92</span> &#125;;</span><br><span class="line">    <span class="function">ofstream <span class="title">file</span><span class="params">(<span class="string">&quot;date.dat&quot;</span>, ios_base::binary)</span></span>;</span><br><span class="line">    file.<span class="built_in">write</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">char</span> *&gt;(&amp;dt),<span class="built_in">sizeof</span>(dt));</span><br><span class="line">    file.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="向字符串输出"><a href="#向字符串输出" class="headerlink" title="向字符串输出"></a>向字符串输出</h3><p>将字符串作为输出流的目标，可以实现将其他数据类型转换为字符串的功能</p>
+<h4 id="字符串输出流（-ostringstream-）"><a href="#字符串输出流（-ostringstream-）" class="headerlink" title="字符串输出流（ ostringstream ）"></a>字符串输出流（ ostringstream ）</h4><ul>
+<li>用于构造字符串</li>
+<li>功能<ul>
+<li>支持ofstream类的除open、close外的所有操作</li>
+<li>str函数可以返回当前已构造的字符串</li>
+</ul>
+</li>
+<li>典型应用<ul>
+<li>将数值转换为字符串</li>
+</ul>
+</li>
+</ul>
+<h4 id="例11-6用ostringstream将数值转换为字符串"><a href="#例11-6用ostringstream将数值转换为字符串" class="headerlink" title="例11-6用ostringstream将数值转换为字符串"></a>例11-6用ostringstream将数值转换为字符串</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_6.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">//函数模板toString可以将各种支持“&lt;&lt;“插入符的类型的对象转换为字符串。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> string <span class="title">toString</span><span class="params">(<span class="type">const</span> T &amp;v)</span> </span>&#123;</span><br><span class="line">    ostringstream os;   <span class="comment">//创建字符串输出流</span></span><br><span class="line">    os &lt;&lt; v;        <span class="comment">//将变量v的值写入字符串流</span></span><br><span class="line">    <span class="keyword">return</span> os.<span class="built_in">str</span>();    <span class="comment">//返回输出流生成的字符串</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    string str1 = <span class="built_in">toString</span>(<span class="number">5</span>);</span><br><span class="line">    cout &lt;&lt; str1 &lt;&lt; endl;</span><br><span class="line">    string str2 = <span class="built_in">toString</span>(<span class="number">1.2</span>);</span><br><span class="line">    cout &lt;&lt; str2 &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">1.2</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h2><h3 id="输入流概述"><a href="#输入流概述" class="headerlink" title="输入流概述"></a>输入流概述</h3><h4 id="重要的输入流类"><a href="#重要的输入流类" class="headerlink" title="重要的输入流类"></a>重要的输入流类</h4><ul>
+<li>istream类最适合用于顺序文本模式输入。cin是其实例。</li>
+<li>ifstream类支持磁盘文件输入。</li>
+<li>istringstream</li>
+</ul>
+<h4 id="构造输入流对象"><a href="#构造输入流对象" class="headerlink" title="构造输入流对象"></a>构造输入流对象</h4><ul>
+<li>如果在构造函数中指定一个文件名，在构造该对象时该文件便自动打开。 ifstream myFile(“filename”);</li>
+<li>在调用默认构造函数之后使用open函数来打开文件。 ifstream myFile; &#x2F;&#x2F;建立一个文件流对象 myFile.open(“filename”); &#x2F;&#x2F;打开文件”filename”</li>
+<li>打开文件时可以指定模式 ifstream myFile(“filename”, ios_base::in | ios_base::binary);</li>
+</ul>
+<h4 id="使用提取运算符从文本文件输入"><a href="#使用提取运算符从文本文件输入" class="headerlink" title="使用提取运算符从文本文件输入"></a>使用提取运算符从文本文件输入</h4><ul>
+<li>提取运算符(&gt;&gt;)对于所有标准C++数据类型都是预先设计好的。</li>
+<li>是从一个输入流对象获取字节最容易的方法。</li>
+<li>ios类中的很多操纵符都可以应用于输入流。但是只有少数几个对输入流对象具有实际影响，其中最重要的是进制操纵符dec、oct和hex。</li>
+</ul>
+<h4 id="输入流相关函数"><a href="#输入流相关函数" class="headerlink" title="输入流相关函数"></a>输入流相关函数</h4><ul>
+<li>open 把该流与一个特定磁盘文件相关联。</li>
+<li>get 功能与提取运算符（&gt;&gt;）很相像，主要的不同点是get函数在读入数据时包括空白字符。</li>
+<li>getline 功能是从输入流中读取多个字符，并且允许指定输入终止字符，读取完成后，从读取的内容中删除终止字符。</li>
+<li>read 从一个文件读字节到一个指定的内存区域，由长度参数确定要读的字节数。当遇到文件结束或者在文本模式文件中遇到文件结束标记字符时结束读取。</li>
+<li>seekg 用来设置文件输入流中读取数据位置的指针。</li>
+<li>tellg 返回当前文件读指针的位置。</li>
+<li>close 关闭与一个文件输入流关联的磁盘文件。</li>
+</ul>
+<h3 id="输入流应用举例"><a href="#输入流应用举例" class="headerlink" title="输入流应用举例"></a>输入流应用举例</h3><h4 id="例11-7-get函数应用举例"><a href="#例11-7-get函数应用举例" class="headerlink" title="例11-7 get函数应用举例"></a>例11-7 get函数应用举例</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_7.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">char</span> ch;</span><br><span class="line">    <span class="keyword">while</span> ((ch = cin.<span class="built_in">get</span>()) != EOF)</span><br><span class="line">        cout.<span class="built_in">put</span>(ch);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例11-8为输入流指定一个终止字符："><a href="#例11-8为输入流指定一个终止字符：" class="headerlink" title="例11-8为输入流指定一个终止字符："></a>例11-8为输入流指定一个终止字符：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_8.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    string line;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Type a line terminated by &#x27;t&#x27; &quot;</span> &lt;&lt; endl; </span><br><span class="line">    <span class="built_in">getline</span>(cin, line, <span class="string">&#x27;t&#x27;</span>);</span><br><span class="line">    cout &lt;&lt; line &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例11-9-从文件读一个二进制记录到一个结构中"><a href="#例11-9-从文件读一个二进制记录到一个结构中" class="headerlink" title="例11-9 从文件读一个二进制记录到一个结构中"></a>例11-9 从文件读一个二进制记录到一个结构中</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_9.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">SalaryInfo</span> &#123;</span><br><span class="line">    <span class="type">unsigned</span> id;</span><br><span class="line">    <span class="type">double</span> salary;</span><br><span class="line">&#125;; </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    SalaryInfo employee1 = &#123; <span class="number">600001</span>, <span class="number">8000</span> &#125;;</span><br><span class="line">    <span class="function">ofstream <span class="title">os</span><span class="params">(<span class="string">&quot;payroll&quot;</span>, ios_base::out | ios_base::binary)</span></span>;</span><br><span class="line">    os.<span class="built_in">write</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">char</span> *&gt;(&amp;employee1), <span class="built_in">sizeof</span>(employee1));</span><br><span class="line">    os.<span class="built_in">close</span>();</span><br><span class="line">    <span class="function">ifstream <span class="title">is</span><span class="params">(<span class="string">&quot;payroll&quot;</span>, ios_base::in | ios_base::binary)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (is) &#123;</span><br><span class="line">        SalaryInfo employee2;</span><br><span class="line">        is.<span class="built_in">read</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">char</span> *&gt;(&amp;employee2), <span class="built_in">sizeof</span>(employee2));</span><br><span class="line">        cout &lt;&lt; [employee2.id](http:<span class="comment">//employee2.id) &lt;&lt; &quot; &quot; &lt;&lt; employee2.salary &lt;&lt; endl;</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;ERROR: Cannot open file &#x27;payroll&#x27;.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    is.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例11-10用seekg函数设置位置指针"><a href="#例11-10用seekg函数设置位置指针" class="headerlink" title="例11-10用seekg函数设置位置指针"></a>例11-10用seekg函数设置位置指针</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_10.cpp, 头部分省略</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> values[] = &#123; <span class="number">3</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">4</span> &#125;;</span><br><span class="line">    <span class="function">ofstream <span class="title">os</span><span class="params">(<span class="string">&quot;integers&quot;</span>, ios_base::out | ios_base::binary)</span></span>;</span><br><span class="line">    os.<span class="built_in">write</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">char</span> *&gt;(values), <span class="built_in">sizeof</span>(values));</span><br><span class="line">    os.<span class="built_in">close</span>();</span><br><span class="line"></span><br><span class="line"><span class="function">ifstream <span class="title">is</span><span class="params">(<span class="string">&quot;integers&quot;</span>, ios_base::in | ios_base::binary)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (is) &#123;</span><br><span class="line">        is.<span class="built_in">seekg</span>(<span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">        <span class="type">int</span> v;</span><br><span class="line">        is.<span class="built_in">read</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">char</span> *&gt;(&amp;v), <span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;The 4th integer in the file &#x27;integers&#x27; is &quot;</span> &lt;&lt; v &lt;&lt; endl;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;ERROR: Cannot open file &#x27;integers&#x27;.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="例11-11-读一个文件并显示出其中0元素的位置"><a href="#例11-11-读一个文件并显示出其中0元素的位置" class="headerlink" title="例11-11 读一个文件并显示出其中0元素的位置"></a>例11-11 读一个文件并显示出其中0元素的位置</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_11.cpp, 头部分省略</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">ifstream <span class="title">file</span><span class="params">(<span class="string">&quot;integers&quot;</span>, ios_base::in | ios_base::binary)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (file) &#123;</span><br><span class="line">        <span class="keyword">while</span> (file) &#123;<span class="comment">//读到文件尾file为0</span></span><br><span class="line">            streampos here = file.<span class="built_in">tellg</span>();</span><br><span class="line">            <span class="type">int</span> v;</span><br><span class="line">            file.<span class="built_in">read</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">char</span> *&gt;(&amp;v), <span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">            <span class="keyword">if</span> (file &amp;&amp; v == <span class="number">0</span>) </span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Position &quot;</span> &lt;&lt; here &lt;&lt; <span class="string">&quot; is 0&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;ERROR: Cannot open file &#x27;integers&#x27;.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    file.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="从字符串输入"><a href="#从字符串输入" class="headerlink" title="从字符串输入"></a>从字符串输入</h3><p>将字符串作为文本输入流的源，可以将字符串转换为其他数据类型</p>
+<h4 id="字符串输入流（-istringstream）"><a href="#字符串输入流（-istringstream）" class="headerlink" title="字符串输入流（ istringstream）"></a>字符串输入流（ istringstream）</h4><ul>
+<li>用于从字符串读取数据</li>
+<li>在构造函数中设置要读取的字符串</li>
+<li>功能<ul>
+<li>支持ifstream类的除open、close外的所有操作</li>
+</ul>
+</li>
+<li>典型应用<ul>
+<li>将字符串转换为数值</li>
+</ul>
+</li>
+</ul>
+<h4 id="例11-12用istringstream将字符串转换为数值"><a href="#例11-12用istringstream将字符串转换为数值" class="headerlink" title="例11-12用istringstream将字符串转换为数值"></a>例11-12用istringstream将字符串转换为数值</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//11_12.cpp, 头部分省略</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> T <span class="title">fromString</span><span class="params">(<span class="type">const</span> string &amp;str)</span> </span>&#123;</span><br><span class="line">    <span class="function">istringstream <span class="title">is</span><span class="params">(str)</span></span>;  <span class="comment">//创建字符串输入流</span></span><br><span class="line">    T v;</span><br><span class="line">    is &gt;&gt; v;    <span class="comment">//从字符串输入流中读取变量v</span></span><br><span class="line">    <span class="keyword">return</span> v;   <span class="comment">//返回变量v</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> v1 = <span class="built_in">fromString</span>&lt;<span class="type">int</span>&gt;(<span class="string">&quot;5&quot;</span>);</span><br><span class="line">    cout &lt;&lt; v1 &lt;&lt; endl;</span><br><span class="line">    <span class="type">double</span> v2 = <span class="built_in">fromString</span>&lt;<span class="type">double</span>&gt;(<span class="string">&quot;1.2&quot;</span>);</span><br><span class="line">    cout &lt;&lt; v2 &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">输出结果：</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">1.2</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="输入-x2F-输出流"><a href="#输入-x2F-输出流" class="headerlink" title="输入&#x2F;输出流"></a>输入&#x2F;输出流</h2><h4 id="两个重要的输入-x2F-输出流"><a href="#两个重要的输入-x2F-输出流" class="headerlink" title="两个重要的输入&#x2F;输出流"></a>两个重要的输入&#x2F;输出流</h4><ul>
+<li>一个iostream对象可以是数据的源或目的。</li>
+<li>两个重要的I&#x2F;O流类都是从iostream派生的，它们是fstream和stringstream。这些类继承了前面描述的istream和ostream类的功能。</li>
+</ul>
+<h4 id="fstream类"><a href="#fstream类" class="headerlink" title="fstream类"></a>fstream类</h4><ul>
+<li>fstream类支持磁盘文件输入和输出。</li>
+<li>如果需要在同一个程序中从一个特定磁盘文件读并写到该磁盘文件，可以构造一个fstream对象。</li>
+<li>一个fstream对象是有两个逻辑子流的单个流，两个子流一个用于输入，另一个用于输出。</li>
+</ul>
+<h4 id="stringstream类"><a href="#stringstream类" class="headerlink" title="stringstream类"></a>stringstream类</h4><ul>
+<li>stringstream类支持面向字符串的输入和输出</li>
+<li>可以用于对同一个字符串的内容交替读写，同样是由两个逻辑子流构成。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">唤石</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yinleistone.github.io/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/">http://yinleistone.github.io/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yinleistone.github.io" target="_blank">唤石</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"><img class="prev-cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">异常处理</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/31/%E6%B3%9B%E5%9E%8B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8EC++%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF/"><img class="next-cover" src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">泛型程序设计与C++标准模板</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/18/C++%E7%AE%80%E5%8D%95%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89/" title="C++简单程序设计（一）"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">C++简单程序设计（一）</div></div></a></div><div><a href="/2022/03/19/%E5%87%BD%E6%95%B0/" title="函数"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">函数</div></div></a></div><div><a href="/2022/03/19/%E6%95%B0%E6%8D%AE%E7%9A%84%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/" title="数据的共享与保护"><img class="cover" src="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">数据的共享与保护</div></div></a></div><div><a href="/2022/03/19/C++%E7%AE%80%E5%8D%95%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="C++简单程序设计（二）"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">C++简单程序设计（二）</div></div></a></div><div><a href="/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数组、指针与字符串（二）"><img class="cover" src="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">数组、指针与字符串（二）</div></div></a></div><div><a href="/2022/03/19/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" title="类与对象"><img class="cover" src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">类与对象</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/12.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">唤石</div><div class="author-info__description">What I cannot create, I do not understand.</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yinleistone"><i class="fa-solid fa-heart-pulse"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yinleistone" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1025028957@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/391746931?spm_id_from=333.1007.0.0" target="_blank" title=""><i class="fa-brands fa-bilibili"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">爱科技，更爱心雨！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5-x2F-%E8%BE%93%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">流类库与输入&#x2F;输出</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#I-x2F-O%E6%B5%81%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8A%E6%B5%81%E7%B1%BB%E5%BA%93%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">I&#x2F;O流的概念及流类库结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E4%B8%8E%E5%A4%96%E7%95%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E4%BF%A1%E6%81%AF%E4%BA%A4%E6%8D%A2"><span class="toc-number">1.1.1.</span> <span class="toc-text">程序与外界环境的信息交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%AF%B9%E8%B1%A1%E4%B8%8E%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">1.1.2.</span> <span class="toc-text">流对象与文件操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E5%8F%96%E4%B8%8E%E6%8F%92%E5%85%A5"><span class="toc-number">1.1.3.</span> <span class="toc-text">提取与插入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%B1%BB%E5%BA%93%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.4.</span> <span class="toc-text">流类库结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%B1%BB%E5%88%97%E8%A1%A8"><span class="toc-number">1.1.5.</span> <span class="toc-text">流类列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%B5%81"><span class="toc-number">1.2.</span> <span class="toc-text">输出流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%B5%81%E6%A6%82%E8%BF%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">输出流概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E4%B8%89%E4%B8%AA%E8%BE%93%E5%87%BA%E6%B5%81"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">最重要的三个输出流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%84%E5%85%88%E5%AE%9A%E4%B9%89%E7%9A%84%E8%BE%93%E5%87%BA%E6%B5%81%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">预先定义的输出流对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA%E6%8D%A2%E5%90%91"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">标准输出换向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E8%BE%93%E5%87%BA%E6%B5%81%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">构造输出流对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E6%B5%81%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.1.5.</span> <span class="toc-text">文件输出流成员函数的三种类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%E6%B5%81%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.1.6.</span> <span class="toc-text">文件输出流成员函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA"><span class="toc-number">1.2.2.</span> <span class="toc-text">向文本文件输出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">插入运算符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E7%BA%B5%E7%AC%A6%EF%BC%88manipulator%EF%BC%89"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">操纵符（manipulator）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-1-%E4%BD%BF%E7%94%A8width%E6%8E%A7%E5%88%B6%E8%BE%93%E5%87%BA%E5%AE%BD%E5%BA%A6"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">例11-1 使用width控制输出宽度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-2%E4%BD%BF%E7%94%A8setw%E6%93%8D%E7%BA%B5%E7%AC%A6%E6%8C%87%E5%AE%9A%E5%AE%BD%E5%BA%A6"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">例11-2使用setw操纵符指定宽度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-3%E8%AE%BE%E7%BD%AE%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">例11-3设置对齐方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setiosflags%E6%93%8D%E7%BA%B5%E7%AC%A6"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">setiosflags操纵符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setiosflags%E7%9A%84%E5%8F%82%E6%95%B0%EF%BC%88%E6%B5%81%E7%9A%84%E6%A0%BC%E5%BC%8F%E6%A0%87%E8%AF%86%EF%BC%89"><span class="toc-number">1.2.2.7.</span> <span class="toc-text">setiosflags的参数（流的格式标识）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B2%BE%E5%BA%A6"><span class="toc-number">1.2.2.8.</span> <span class="toc-text">精度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-4%E6%8E%A7%E5%88%B6%E8%BE%93%E5%87%BA%E7%B2%BE%E5%BA%A6%E2%80%94%E2%80%94%E6%9C%AA%E6%8C%87%E5%AE%9Afixed%E6%88%96scientific"><span class="toc-number">1.2.2.9.</span> <span class="toc-text">例11-4控制输出精度——未指定fixed或scientific</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-4%E6%8E%A7%E5%88%B6%E8%BE%93%E5%87%BA%E7%B2%BE%E5%BA%A6%E2%80%94%E2%80%94%E6%8C%87%E5%AE%9Afixed"><span class="toc-number">1.2.2.10.</span> <span class="toc-text">例11-4控制输出精度——指定fixed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-4%E6%8E%A7%E5%88%B6%E8%BE%93%E5%87%BA%E7%B2%BE%E5%BA%A6%E2%80%94%E2%80%94%E6%8C%87%E5%AE%9Ascientific"><span class="toc-number">1.2.2.11.</span> <span class="toc-text">例11-4控制输出精度——指定scientific</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA"><span class="toc-number">1.2.3.</span> <span class="toc-text">向二进制文件输出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E6%B5%81"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">二进制文件流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-5-%E5%90%91%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">例11-5 向二进制文件输出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%87%BA"><span class="toc-number">1.2.4.</span> <span class="toc-text">向字符串输出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%87%BA%E6%B5%81%EF%BC%88-ostringstream-%EF%BC%89"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">字符串输出流（ ostringstream ）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-6%E7%94%A8ostringstream%E5%B0%86%E6%95%B0%E5%80%BC%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">例11-6用ostringstream将数值转换为字符串</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%B5%81"><span class="toc-number">1.3.</span> <span class="toc-text">输入流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%B5%81%E6%A6%82%E8%BF%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text">输入流概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E7%9A%84%E8%BE%93%E5%85%A5%E6%B5%81%E7%B1%BB"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">重要的输入流类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E8%BE%93%E5%85%A5%E6%B5%81%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">构造输入流对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%8F%90%E5%8F%96%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BB%8E%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E8%BE%93%E5%85%A5"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">使用提取运算符从文本文件输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%B5%81%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">输入流相关函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%B5%81%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">输入流应用举例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-7-get%E5%87%BD%E6%95%B0%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">例11-7 get函数应用举例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-8%E4%B8%BA%E8%BE%93%E5%85%A5%E6%B5%81%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AA%E7%BB%88%E6%AD%A2%E5%AD%97%E7%AC%A6%EF%BC%9A"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">例11-8为输入流指定一个终止字符：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-9-%E4%BB%8E%E6%96%87%E4%BB%B6%E8%AF%BB%E4%B8%80%E4%B8%AA%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%AE%B0%E5%BD%95%E5%88%B0%E4%B8%80%E4%B8%AA%E7%BB%93%E6%9E%84%E4%B8%AD"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">例11-9 从文件读一个二进制记录到一个结构中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-10%E7%94%A8seekg%E5%87%BD%E6%95%B0%E8%AE%BE%E7%BD%AE%E4%BD%8D%E7%BD%AE%E6%8C%87%E9%92%88"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">例11-10用seekg函数设置位置指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-11-%E8%AF%BB%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%B9%B6%E6%98%BE%E7%A4%BA%E5%87%BA%E5%85%B6%E4%B8%AD0%E5%85%83%E7%B4%A0%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">例11-11 读一个文件并显示出其中0元素的位置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5"><span class="toc-number">1.3.3.</span> <span class="toc-text">从字符串输入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E6%B5%81%EF%BC%88-istringstream%EF%BC%89"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">字符串输入流（ istringstream）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B11-12%E7%94%A8istringstream%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%95%B0%E5%80%BC"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">例11-12用istringstream将字符串转换为数值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5-x2F-%E8%BE%93%E5%87%BA%E6%B5%81"><span class="toc-number">1.4.</span> <span class="toc-text">输入&#x2F;输出流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E7%9A%84%E8%BE%93%E5%85%A5-x2F-%E8%BE%93%E5%87%BA%E6%B5%81"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">两个重要的输入&#x2F;输出流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fstream%E7%B1%BB"><span class="toc-number">1.4.0.2.</span> <span class="toc-text">fstream类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stringstream%E7%B1%BB"><span class="toc-number">1.4.0.3.</span> <span class="toc-text">stringstream类</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="异常处理"><img src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="异常处理"/></a><div class="content"><a class="title" href="/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="异常处理">异常处理</a><time datetime="2022-03-31T06:39:42.000Z" title="发表于 2022-03-31 14:39:42">2022-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/" title="流类库与输入/输出"><img src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="流类库与输入/输出"/></a><div class="content"><a class="title" href="/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/" title="流类库与输入/输出">流类库与输入/输出</a><time datetime="2022-03-31T06:38:42.000Z" title="发表于 2022-03-31 14:38:42">2022-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E6%B3%9B%E5%9E%8B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8EC++%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF/" title="泛型程序设计与C++标准模板"><img src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="泛型程序设计与C++标准模板"/></a><div class="content"><a class="title" href="/2022/03/31/%E6%B3%9B%E5%9E%8B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8EC++%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF/" title="泛型程序设计与C++标准模板">泛型程序设计与C++标准模板</a><time datetime="2022-03-31T06:37:42.000Z" title="发表于 2022-03-31 14:37:42">2022-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BE%A4%E4%BD%93%E6%95%B0%E6%8D%AE/" title="模板与群体数据"><img src="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="模板与群体数据"/></a><div class="content"><a class="title" href="/2022/03/31/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BE%A4%E4%BD%93%E6%95%B0%E6%8D%AE/" title="模板与群体数据">模板与群体数据</a><time datetime="2022-03-31T06:36:42.000Z" title="发表于 2022-03-31 14:36:42">2022-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E5%A4%9A%E6%80%81%E6%80%A7/" title="多态性"><img src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="多态性"/></a><div class="content"><a class="title" href="/2022/03/31/%E5%A4%9A%E6%80%81%E6%80%A7/" title="多态性">多态性</a><time datetime="2022-03-31T06:35:42.000Z" title="发表于 2022-03-31 14:35:42">2022-03-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 唤石</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

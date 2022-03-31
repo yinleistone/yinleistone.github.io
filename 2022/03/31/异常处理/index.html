@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>异常处理 | 唤石</title><meta name="keywords" content="C++"><meta name="author" content="唤石"><meta name="copyright" content="唤石"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="异常处理异常处理的思想与程序实现异常处理的基本思想 异常处理的语法 例12-1处理除零异常12345678910111213141516171819&#x2F;&#x2F;12_1.cpp#include &lt;iostream&gt;using namespace std;int divide(int x, int y) &amp;#123;    if (y &#x3D;&#x3D; 0)        throw x;    retur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异常处理">
+<meta property="og:url" content="http://yinleistone.github.io/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="唤石">
+<meta property="og:description" content="异常处理异常处理的思想与程序实现异常处理的基本思想 异常处理的语法 例12-1处理除零异常12345678910111213141516171819&#x2F;&#x2F;12_1.cpp#include &lt;iostream&gt;using namespace std;int divide(int x, int y) &amp;#123;    if (y &#x3D;&#x3D; 0)        throw x;    retur">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png">
+<meta property="article:published_time" content="2022-03-31T06:39:42.000Z">
+<meta property="article:modified_time" content="2022-03-31T09:07:59.185Z">
+<meta property="article:author" content="唤石">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png"><link rel="shortcut icon" href="/img/30.png"><link rel="canonical" href="http://yinleistone.github.io/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '异常处理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-31 17:07:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.1.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/12.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">唤石</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">异常处理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-31T06:39:42.000Z" title="发表于 2022-03-31 14:39:42">2022-03-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-31T09:07:59.185Z" title="更新于 2022-03-31 17:07:59">2022-03-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C/">C++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="异常处理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><h2 id="异常处理的思想与程序实现"><a href="#异常处理的思想与程序实现" class="headerlink" title="异常处理的思想与程序实现"></a>异常处理的思想与程序实现</h2><h3 id="异常处理的基本思想"><a href="#异常处理的基本思想" class="headerlink" title="异常处理的基本思想"></a>异常处理的基本思想</h3><p><img src="http://sc0.ykt.io/ue_i/20200308/1236682439804456960.png"></p>
+<h3 id="异常处理的语法"><a href="#异常处理的语法" class="headerlink" title="异常处理的语法"></a>异常处理的语法</h3><p><img src="http://sc0.ykt.io/ue_i/20200308/1236682499128692736.png"></p>
+<h3 id="例12-1处理除零异常"><a href="#例12-1处理除零异常" class="headerlink" title="例12-1处理除零异常"></a>例12-1处理除零异常</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//12_1.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">divide</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (y == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> x;</span><br><span class="line">    <span class="keyword">return</span> x / y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;5 / 2 = &quot;</span> &lt;&lt; <span class="built_in">divide</span>(<span class="number">5</span>, <span class="number">2</span>) &lt;&lt; endl;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;8 / 0 = &quot;</span> &lt;&lt; <span class="built_in">divide</span>(<span class="number">8</span>, <span class="number">0</span>) &lt;&lt; endl;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;7 / 1 = &quot;</span> &lt;&lt; <span class="built_in">divide</span>(<span class="number">7</span>, <span class="number">1</span>) &lt;&lt; endl;</span><br><span class="line">    &#125; <span class="built_in">catch</span> (<span class="type">int</span> e) &#123;</span><br><span class="line">        cout &lt;&lt; e &lt;&lt; <span class="string">&quot; is divided by zero!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;That is ok.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="异常接口声明"><a href="#异常接口声明" class="headerlink" title="异常接口声明"></a>异常接口声明</h3><ul>
+<li>一个函数显式声明可能抛出的异常，有利于函数的调用者为异常处理做好准备</li>
+<li>可以在函数的声明中列出这个函数可能抛掷的所有异常类型。<br>  例如：void fun() throw(A，B，C，D);</li>
+<li>若无异常接口声明，则此函数可以抛掷任何类型的异常。</li>
+<li>不抛掷任何类型异常的函数声明如下：<br>  void fun() throw();</li>
+</ul>
+<h2 id="异常处理中的构造与析构"><a href="#异常处理中的构造与析构" class="headerlink" title="异常处理中的构造与析构"></a>异常处理中的构造与析构</h2><h3 id="自动的析构"><a href="#自动的析构" class="headerlink" title="自动的析构"></a>自动的析构</h3><ul>
+<li>找到一个匹配的catch异常处理后<ul>
+<li>初始化异常参数。</li>
+<li>将从对应的try块开始到异常被抛掷处之间构造（且尚未析构）的所有自动对象进行析构。</li>
+</ul>
+</li>
+<li>从最后一个catch处理之后开始恢复执行。</li>
+</ul>
+<h3 id="例12-2-带析构语义的类的C-异常处理"><a href="#例12-2-带析构语义的类的C-异常处理" class="headerlink" title="例12-2 带析构语义的类的C++异常处理"></a>例12-2 带析构语义的类的C++异常处理</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//12_2.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyException</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyException</span>(<span class="type">const</span> string &amp;message) : <span class="built_in">message</span>(message) &#123;&#125;</span><br><span class="line">    ~<span class="built_in">MyException</span>() &#123;&#125;</span><br><span class="line">    <span class="function"><span class="type">const</span> string &amp;<span class="title">getMessage</span><span class="params">()</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> message; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    string message;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Demo</span>() &#123; cout &lt;&lt; <span class="string">&quot;Constructor of Demo&quot;</span> &lt;&lt; endl; &#125;</span><br><span class="line">    ~<span class="built_in">Demo</span>() &#123; cout &lt;&lt; <span class="string">&quot;Destructor of Demo&quot;</span> &lt;&lt; endl; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">(MyException)</span> </span>&#123;</span><br><span class="line">    Demo d;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Throw MyException in func()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">throw</span> <span class="built_in">MyException</span>(<span class="string">&quot;exception thrown by func()&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;In main function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="built_in">func</span>();</span><br><span class="line">    &#125; <span class="built_in">catch</span> (MyException&amp; e) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Caught an exception: &quot;</span> &lt;&lt; e.<span class="built_in">getMessage</span>() &lt;&lt; endl;</span><br><span class="line">    &#125; </span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Resume the execution of main()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">运行结果：</span><br><span class="line"><span class="function">In main function</span></span><br><span class="line"><span class="function">Constructor of Demo</span></span><br><span class="line"><span class="function">Throw MyException in <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function">Destructor of Demo</span></span><br><span class="line"><span class="function">Caught an exception: exception thrown by func()</span></span><br><span class="line"><span class="function">Resume the execution of main()</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="标准程序库异常处理"><a href="#标准程序库异常处理" class="headerlink" title="标准程序库异常处理"></a>标准程序库异常处理</h2><h3 id="标准异常类的继承关系"><a href="#标准异常类的继承关系" class="headerlink" title="标准异常类的继承关系"></a>标准异常类的继承关系</h3><p><img src="http://sc0.ykt.io/ue_i/20200309/1236683751526895616.png"></p>
+<h3 id="C-标准库各种异常类所代表的异常"><a href="#C-标准库各种异常类所代表的异常" class="headerlink" title="C++标准库各种异常类所代表的异常"></a>C++标准库各种异常类所代表的异常</h3><p><img src="http://sc0.ykt.io/ue_i/20200309/1236683802936479744.png"></p>
+<h3 id="标准异常类的基础"><a href="#标准异常类的基础" class="headerlink" title="标准异常类的基础"></a>标准异常类的基础</h3><ul>
+<li>exception：标准程序库异常类的公共基类</li>
+<li>logic_error表示可以在程序中被预先检测到的异常<ul>
+<li>如果小心地编写程序，这类异常能够避免</li>
+</ul>
+</li>
+<li>runtime_error表示难以被预先检测的异常</li>
+</ul>
+<h3 id="例12-3-三角形面积计算"><a href="#例12-3-三角形面积计算" class="headerlink" title="例12-3 三角形面积计算"></a>例12-3 三角形面积计算</h3><ul>
+<li>编写一个计算三角形面积的函数，函数的参数为三角形三边边长a、b、c，可以用<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh/%E6%B5%B7%E4%BC%A6%E5%85%AC%E5%BC%8F">Heron公式</a>计算：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//12_3.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//给出三角形三边长，计算三角形面积</span></span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">area</span><span class="params">(<span class="type">double</span> a, <span class="type">double</span> b, <span class="type">double</span> c)</span>  <span class="title">throw</span> <span class="params">(invalid_argument)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="comment">//判断三角形边长是否为正</span></span><br><span class="line">    <span class="keyword">if</span> (a &lt;= <span class="number">0</span> || b &lt;= <span class="number">0</span> || c &lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">invalid_argument</span>(<span class="string">&quot;the side length should be positive&quot;</span>);</span><br><span class="line">   <span class="comment">//判断三边长是否满足三角不等式</span></span><br><span class="line">    <span class="keyword">if</span> (a + b &lt;= c || b + c &lt;= a || c + a &lt;= b)</span><br><span class="line">        <span class="keyword">throw</span> <span class="built_in">invalid_argument</span>(<span class="string">&quot;the side length should fit the triangle inequation&quot;</span>);</span><br><span class="line">   <span class="comment">//由Heron公式计算三角形面积</span></span><br><span class="line">    <span class="type">double</span> s = (a + b + c) / <span class="number">2</span>; </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sqrt</span>(s * (s - a) * (s - b) * (s - c));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> a, b, c; <span class="comment">//三角形三边长</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Please input the side lengths of a triangle: &quot;</span>;</span><br><span class="line">    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">double</span> s = <span class="built_in">area</span>(a, b, c);   <span class="comment">//尝试计算三角形面积</span></span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Area: &quot;</span> &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">    &#125; <span class="built_in">catch</span> (exception &amp;e) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Error: &quot;</span> &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">•运行结果<span class="number">1</span>：</span><br><span class="line">Please input the side lengths of a triangle: <span class="number">3</span> <span class="number">4</span> <span class="number">5</span></span><br><span class="line">Area: <span class="number">6</span></span><br><span class="line">•运行结果<span class="number">2</span>：</span><br><span class="line">Please input the side lengths of a triangle: <span class="number">0</span> <span class="number">5</span> <span class="number">5</span></span><br><span class="line">Error: the side length should be positive</span><br><span class="line">•运行结果<span class="number">2</span>：</span><br><span class="line">Please input the side lengths of a triangle: <span class="number">1</span> <span class="number">2</span> <span class="number">4</span></span><br><span class="line">Error: the side length should fit the triangle inequation</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">唤石</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://yinleistone.github.io/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">http://yinleistone.github.io/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://yinleistone.github.io" target="_blank">唤石</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/"><img class="next-cover" src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">流类库与输入/输出</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/18/C++%E7%AE%80%E5%8D%95%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89/" title="C++简单程序设计（一）"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">C++简单程序设计（一）</div></div></a></div><div><a href="/2022/03/19/%E5%87%BD%E6%95%B0/" title="函数"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">函数</div></div></a></div><div><a href="/2022/03/19/%E6%95%B0%E6%8D%AE%E7%9A%84%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4/" title="数据的共享与保护"><img class="cover" src="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">数据的共享与保护</div></div></a></div><div><a href="/2022/03/19/C++%E7%AE%80%E5%8D%95%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="C++简单程序设计（二）"><img class="cover" src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">C++简单程序设计（二）</div></div></a></div><div><a href="/2022/03/19/%E6%95%B0%E7%BB%84%E3%80%81%E6%8C%87%E9%92%88%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数组、指针与字符串（二）"><img class="cover" src="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">数组、指针与字符串（二）</div></div></a></div><div><a href="/2022/03/19/%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/" title="类与对象"><img class="cover" src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">类与对象</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/12.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">唤石</div><div class="author-info__description">What I cannot create, I do not understand.</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">13</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/yinleistone"><i class="fa-solid fa-heart-pulse"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yinleistone" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1025028957@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/391746931?spm_id_from=333.1007.0.0" target="_blank" title=""><i class="fa-brands fa-bilibili"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">爱科技，更爱心雨！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84%E6%80%9D%E6%83%B3%E4%B8%8E%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.1.</span> <span class="toc-text">异常处理的思想与程序实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.1.1.</span> <span class="toc-text">异常处理的基本思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="toc-number">1.1.2.</span> <span class="toc-text">异常处理的语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B12-1%E5%A4%84%E7%90%86%E9%99%A4%E9%9B%B6%E5%BC%82%E5%B8%B8"><span class="toc-number">1.1.3.</span> <span class="toc-text">例12-1处理除零异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E6%8E%A5%E5%8F%A3%E5%A3%B0%E6%98%8E"><span class="toc-number">1.1.4.</span> <span class="toc-text">异常接口声明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E4%B8%8E%E6%9E%90%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">异常处理中的构造与析构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E7%9A%84%E6%9E%90%E6%9E%84"><span class="toc-number">1.2.1.</span> <span class="toc-text">自动的析构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B12-2-%E5%B8%A6%E6%9E%90%E6%9E%84%E8%AF%AD%E4%B9%89%E7%9A%84%E7%B1%BB%E7%9A%84C-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">例12-2 带析构语义的类的C++异常处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E7%A8%8B%E5%BA%8F%E5%BA%93%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">标准程序库异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%BC%82%E5%B8%B8%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB"><span class="toc-number">1.3.1.</span> <span class="toc-text">标准异常类的继承关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E6%A0%87%E5%87%86%E5%BA%93%E5%90%84%E7%A7%8D%E5%BC%82%E5%B8%B8%E7%B1%BB%E6%89%80%E4%BB%A3%E8%A1%A8%E7%9A%84%E5%BC%82%E5%B8%B8"><span class="toc-number">1.3.2.</span> <span class="toc-text">C++标准库各种异常类所代表的异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%BC%82%E5%B8%B8%E7%B1%BB%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="toc-number">1.3.3.</span> <span class="toc-text">标准异常类的基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B12-3-%E4%B8%89%E8%A7%92%E5%BD%A2%E9%9D%A2%E7%A7%AF%E8%AE%A1%E7%AE%97"><span class="toc-number">1.3.4.</span> <span class="toc-text">例12-3 三角形面积计算</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="异常处理"><img src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="异常处理"/></a><div class="content"><a class="title" href="/2022/03/31/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="异常处理">异常处理</a><time datetime="2022-03-31T06:39:42.000Z" title="发表于 2022-03-31 14:39:42">2022-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/" title="流类库与输入/输出"><img src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="流类库与输入/输出"/></a><div class="content"><a class="title" href="/2022/03/31/%E6%B5%81%E7%B1%BB%E5%BA%93%E4%B8%8E%E8%BE%93%E5%85%A5.%E8%BE%93%E5%87%BA/" title="流类库与输入/输出">流类库与输入/输出</a><time datetime="2022-03-31T06:38:42.000Z" title="发表于 2022-03-31 14:38:42">2022-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E6%B3%9B%E5%9E%8B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8EC++%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF/" title="泛型程序设计与C++标准模板"><img src="https://s2.loli.net/2022/03/04/WJpdtnGaKueiws4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="泛型程序设计与C++标准模板"/></a><div class="content"><a class="title" href="/2022/03/31/%E6%B3%9B%E5%9E%8B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8EC++%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF/" title="泛型程序设计与C++标准模板">泛型程序设计与C++标准模板</a><time datetime="2022-03-31T06:37:42.000Z" title="发表于 2022-03-31 14:37:42">2022-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BE%A4%E4%BD%93%E6%95%B0%E6%8D%AE/" title="模板与群体数据"><img src="https://s2.loli.net/2022/03/04/g83us2PHA9r71cV.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="模板与群体数据"/></a><div class="content"><a class="title" href="/2022/03/31/%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BE%A4%E4%BD%93%E6%95%B0%E6%8D%AE/" title="模板与群体数据">模板与群体数据</a><time datetime="2022-03-31T06:36:42.000Z" title="发表于 2022-03-31 14:36:42">2022-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/31/%E5%A4%9A%E6%80%81%E6%80%A7/" title="多态性"><img src="https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="多态性"/></a><div class="content"><a class="title" href="/2022/03/31/%E5%A4%9A%E6%80%81%E6%80%A7/" title="多态性">多态性</a><time datetime="2022-03-31T06:35:42.000Z" title="发表于 2022-03-31 14:35:42">2022-03-31</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2022/03/04/gIGUsQiZvHkNVmM.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By 唤石</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
